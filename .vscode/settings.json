@@ -1,0 +1,18 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.ts$",
+        "cmd": "yarn format && yarn lint"
+      },
+      {
+        "match": "\\.tsx$",
+        "cmd": "yarn format && yarn lint"
+      },
+      {
+        "match": "\\.json$",
+        "cmd": "yarn format && yarn lint"
+      },
+    ]
+  }
+}
