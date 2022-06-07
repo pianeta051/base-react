@@ -3,16 +3,16 @@
     "commands": [
       {
         "match": "\\.ts$",
-        "cmd": "yarn format && yarn lint"
+        "cmd": "npm run format && npm run lint"
       },
       {
         "match": "\\.tsx$",
-        "cmd": "yarn format && yarn lint"
+        "cmd": "npm run format && npm run lint"
       },
       {
         "match": "\\.json$",
-        "cmd": "yarn format && yarn lint"
-      },
+        "cmd": "npm run format && npm run lint"
+      }
     ]
   }
 }
