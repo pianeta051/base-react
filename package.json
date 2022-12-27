@@ -9,6 +9,7 @@
     "@mui/lab": "^5.0.0-alpha.110",
     "@mui/material": "^5.10.11",
     "@mui/styled-engine-sc": "^5.8.0",
+    "@mui/x-data-grid": "^5.17.16",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",

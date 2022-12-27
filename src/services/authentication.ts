@@ -1,4 +1,5 @@
 export type User = {
+  id: number;
   email: string;
   password: string;
   name?: string;
@@ -7,20 +8,45 @@ export type User = {
 
 const USERS: User[] = [
   {
+    id: 1,
     email: "user1@fake.email",
     password: "1234",
     name: "Fake User",
     mustChangePassword: false,
   },
   {
+    id: 2,
     email: "user2@fake.email",
     password: "abcd",
     name: "Another User",
     mustChangePassword: true,
   },
+  {
+    id: 3,
+    email: "user3@fake.email",
+    password: "abcd",
+    name: "Some rando",
+    mustChangePassword: true,
+  },
 ];
 
 const sleep = async (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+export const createUser = async (email: string, password: string) => {
+  await sleep(1000);
+  const existingUser = USERS.find((user) => user.email === email);
+  if (existingUser) {
+    throw new Error("DUPLICATED_USER");
+  }
+  const user: User = {
+    id: USERS.length + 1,
+    email,
+    password,
+    mustChangePassword: true,
+  };
+  USERS.push(user);
+  return user;
+};
 
 export const forgotPassword = async (email: string) => {
   await sleep(1000);
@@ -28,6 +54,11 @@ export const forgotPassword = async (email: string) => {
   if (!user) {
     throw new Error("USER_NOT_EXISTS");
   }
+};
+
+export const getUsers = async () => {
+  await sleep(1000);
+  return USERS;
 };
 
 export const logIn = async (email: string, password: string) => {

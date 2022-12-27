@@ -38,6 +38,13 @@ export const Error: FC<ErrorProps> = ({ code }) => {
       </Alert>
     );
   }
+  if (code === "DUPLICATED_USER") {
+    return (
+      <Alert severity="warning">
+        <Typography>The email you specified is already registered</Typography>
+      </Alert>
+    );
+  }
   return (
     <Alert severity="error">
       <Typography>Internal error</Typography>
