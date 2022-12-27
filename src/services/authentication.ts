@@ -48,6 +48,11 @@ export const createUser = async (email: string, password: string) => {
   return user;
 };
 
+export const currentUser = async () => {
+  await sleep(1000);
+  return USERS[0];
+};
+
 export const forgotPassword = async (email: string) => {
   await sleep(1000);
   const user = USERS.find((user) => email === user.email);
@@ -93,4 +98,38 @@ export const setPassword = async (newPassword: string) => {
   if (newPassword.length === 0) {
     throw new Error("INVALID_PASSWORD");
   }
+};
+
+export const updateName = async (email: string, newName: string) => {
+  await sleep(1000);
+  const userIndex = USERS.findIndex((user) => email === user.email);
+  if (userIndex === -1) {
+    throw new Error("USER_NOT_EXISTS");
+  }
+  const newUser = {
+    ...USERS[userIndex],
+    name: newName,
+  };
+  USERS[userIndex] = newUser;
+  return newUser;
+};
+
+export const updatePassword = async (
+  email: string,
+  oldPassword: string,
+  newPassword: string
+) => {
+  await sleep(1000);
+  const userIndex = USERS.findIndex((user) => email === user.email);
+  if (userIndex === -1) {
+    throw new Error("USER_NOT_EXISTS");
+  }
+  if (oldPassword !== USERS[userIndex].password) {
+    throw new Error("INCORRECT_PASSWORD");
+  }
+  const newUser = {
+    ...USERS[userIndex],
+    password: newPassword,
+  };
+  return newUser;
 };

@@ -5,9 +5,16 @@ import { FC, useState } from "react";
 type PasswordInputProps = {
   onChange?: (password: string) => void;
   value?: string;
+  label?: string;
+  name?: string;
 };
 
-export const PasswordInput: FC<PasswordInputProps> = ({ onChange, value }) => {
+export const PasswordInput: FC<PasswordInputProps> = ({
+  onChange,
+  value,
+  label = "Password",
+  name = "password",
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const changeHandler: React.ChangeEventHandler<
@@ -22,8 +29,8 @@ export const PasswordInput: FC<PasswordInputProps> = ({ onChange, value }) => {
 
   return (
     <TextField
-      label="Password"
-      name="password"
+      label={label}
+      name={name}
       variant="outlined"
       value={value}
       type={showPassword ? "text" : "password"}
