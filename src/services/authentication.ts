@@ -1,7 +1,10 @@
+import { Auth } from "aws-amplify";
+import { CognitoUser } from "amazon-cognito-identity-js";
+
 export type User = {
-  id: number;
+  id?: number;
   email: string;
-  password: string;
+  password?: string;
   name?: string;
   mustChangePassword: boolean;
 };
@@ -66,16 +69,26 @@ export const getUsers = async () => {
   return USERS;
 };
 
+const hasCode = (value: unknown): value is { code: string } =>
+  typeof value === "object" &&
+  (value as Record<string, unknown>).code !== undefined;
+
 export const logIn = async (email: string, password: string) => {
-  await sleep(1000);
-  const user = USERS.find((user) => email === user.email);
-  if (!user) {
-    throw new Error("USER_NOT_EXISTS");
+  try {
+    const user = await Auth.signIn(email, password);
+    return user;
+  } catch (error) {
+    if (hasCode(error)) {
+      if (error?.code === "UserNotFoundException") {
+        throw new Error("USER_NOT_EXISTS");
+      }
+      if (error.code === "NotAuthorizedException") {
+        throw new Error("INCORRECT_PASSWORD");
+      }
+    }
+    console.log("error signing in", error);
+    throw new Error("INTERNAL_ERROR");
   }
-  if (user.password !== password) {
-    throw new Error("INCORRECT_PASSWORD");
-  }
-  return user;
 };
 
 export const resetPassword = async (email: string, newPassword: string) => {
@@ -93,10 +106,18 @@ export const resetPassword = async (email: string, newPassword: string) => {
   };
 };
 
-export const setPassword = async (newPassword: string) => {
-  await sleep(1000);
-  if (newPassword.length === 0) {
-    throw new Error("INVALID_PASSWORD");
+export const setPassword = async (user: CognitoUser, newPassword: string) => {
+  try {
+    const loggedInUser = await Auth.completeNewPassword(user, newPassword);
+    return loggedInUser;
+  } catch (error) {
+    if (hasCode(error)) {
+      if (error?.code === "InvalidPasswordException") {
+        throw new Error("INVALID_PASSWORD");
+      }
+    }
+    console.log("error signing in", error);
+    throw new Error("INTERNAL_ERROR");
   }
 };
 

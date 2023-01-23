@@ -1,24 +1,30 @@
 import { Typography } from "@mui/material";
 import { FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Error } from "../../components/Error/Error";
 import {
   SetPasswordForm,
   SetPasswordFormValues,
 } from "../../components/SetPasswordForm/SetPasswordForm";
+import { useAuth } from "../../context/AuthContext";
 import { setPassword } from "../../services/authentication";
 import { ErrorCode, isErrorCode } from "../../services/error";
 
 export const SetPasswordPage: FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorCode | null>(null);
+  const { user } = useAuth();
 
   const navigate = useNavigate();
+
+  if (!user) {
+    return <Navigate to="/log-in" />;
+  }
 
   const submitHandler = ({ password }: SetPasswordFormValues) => {
     setLoading(true);
     setError(null);
-    setPassword(password)
+    setPassword(user, password)
       .then(() => {
         setLoading(false);
         navigate("/users");
