@@ -7,13 +7,13 @@ import {
   LogInFormValues,
 } from "../../components/LogInForm/LogInForm";
 import { useAuth } from "../../context/AuthContext";
-import { logIn } from "../../services/authentication";
+import { logIn as serviceLogin } from "../../services/authentication";
 import { ErrorCode, isErrorCode } from "../../services/error";
 
 export const LogInPage: FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorCode | null>(null);
-  const { setUser } = useAuth();
+  const { setUser, logIn } = useAuth();
 
   const navigate = useNavigate();
 
@@ -22,16 +22,18 @@ export const LogInPage: FC = () => {
   const submitHandler = (formValues: LogInFormValues) => {
     setLoading(true);
     setError(null);
-    logIn(formValues.email, formValues.password)
+    serviceLogin(formValues.email, formValues.password)
       .then((user) => {
-        if (setUser) {
-          setUser(user);
-        }
-
         setLoading(false);
         if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
+          if (setUser) {
+            setUser(user);
+          }
           navigate("/set-password");
         } else {
+          if (logIn) {
+            logIn(user);
+          }
           navigate("/users");
         }
       })

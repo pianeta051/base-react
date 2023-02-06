@@ -64,6 +64,15 @@ export const forgotPassword = async (email: string) => {
   }
 };
 
+export const getAuthenticatedUser = async (): Promise<CognitoUser | null> => {
+  try {
+    const user = await Auth.currentAuthenticatedUser();
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const getUsers = async () => {
   await sleep(1000);
   return USERS;
@@ -87,6 +96,14 @@ export const logIn = async (email: string, password: string) => {
       }
     }
     console.log("error signing in", error);
+    throw new Error("INTERNAL_ERROR");
+  }
+};
+
+export const logOut = async () => {
+  try {
+    await Auth.signOut();
+  } catch (e) {
     throw new Error("INTERNAL_ERROR");
   }
 };

@@ -13,7 +13,7 @@ import { ErrorCode, isErrorCode } from "../../services/error";
 export const SetPasswordPage: FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<ErrorCode | null>(null);
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   const navigate = useNavigate();
 
@@ -25,7 +25,11 @@ export const SetPasswordPage: FC = () => {
     setLoading(true);
     setError(null);
     setPassword(user, password)
-      .then(() => {
+      .then((loggedInUser) => {
+        if (setUser) {
+          setUser(loggedInUser);
+        }
+
         setLoading(false);
         navigate("/users");
       })
