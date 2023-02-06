@@ -9,10 +9,18 @@ import { ProfilePage } from "../pages/Profile/Profile";
 import { ResetPasswordPage } from "../pages/ResetPassword/ResetPassword";
 import { SetPasswordPage } from "../pages/SetPassword/SetPassword";
 import { UsersPage } from "../pages/Users/Users";
+import { AuthenticatedRoute } from "./AuthenticatedRoute";
+import { UnAuthenticatedRoute } from "./UnAuthenticateRoute";
 
 export const AppRoutes: FC = () => (
   <Routes>
-    <Route element={<AuthenticationLayout />}>
+    <Route
+      element={
+        <UnAuthenticatedRoute>
+          <AuthenticationLayout />
+        </UnAuthenticatedRoute>
+      }
+    >
       <Route index element={<LogInPage />} />
       <Route path="log-in" element={<LogInPage />} />
       <Route path="forgot-password" element={<ForgotPasswordPage />} />
@@ -20,7 +28,14 @@ export const AppRoutes: FC = () => (
       <Route path="set-password" element={<SetPasswordPage />} />
     </Route>
 
-    <Route path="users" element={<UsersLayout />}>
+    <Route
+      path="users"
+      element={
+        <AuthenticatedRoute>
+          <UsersLayout />
+        </AuthenticatedRoute>
+      }
+    >
       <Route index element={<UsersPage />} />
       <Route path="create" element={<CreateUserPage />} />
       <Route path="me" element={<ProfilePage />} />
