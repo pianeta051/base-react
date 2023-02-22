@@ -19,7 +19,7 @@
       "function": {
         "exercisesCustomMessage": {
           "deploymentBucketName": "amplify-exercises-dev-160903-deployment",
-          "s3Key": "amplify-builds/exercisesCustomMessage-444d6e4e39506a567262-build.zip"
+          "s3Key": "amplify-builds/exercisesCustomMessage-6c723039785253424f59-build.zip"
         }
       }
     }

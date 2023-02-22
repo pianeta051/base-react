@@ -12,8 +12,13 @@ exports.handler = async (event) => {
   if (event.triggerSource === "CustomMessage_ForgotPassword") {
     const email = event.request.userAttributes.email;
     const code = event.request.codeParameter;
+    const redirectTo = event.request.clientMetadata.redirectTo;
     event.response.emailSubject = "Reset your password";
-    event.response.emailMessage = forgotPasswordTemplate(email, code);
+    event.response.emailMessage = forgotPasswordTemplate(
+      email,
+      code,
+      redirectTo
+    );
   }
   return event;
 };
@@ -42,7 +47,7 @@ const createUserTemplate = (email, password) => `
 </html>
 `;
 
-const forgotPasswordTemplate = (email, code) => `
+const forgotPasswordTemplate = (email, code, redirectTo) => `
 <p>Click the follow link to reset your password</p>
-<a href="http://localhost:3000/reset-password?email=${email}&code=${code}" target="_blank">Click here</a>
+<a href="${redirectTo}/reset-password?email=${email}&code=${code}" target="_blank">Click here</a>
 `;

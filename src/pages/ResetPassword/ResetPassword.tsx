@@ -37,15 +37,25 @@ export const ResetPasswordPage: FC = () => {
         });
     }
   };
-
   return (
     <>
-      <Typography variant="h3" gutterBottom align="center">
-        Reset your password
-      </Typography>
-      <Typography>Set a new password for logging in.</Typography>
-      {error && <Error code={error} />}
-      <ResetPasswordForm loading={loading} onSubmit={submitHandler} />
+      {email === null || code == null ? (
+        <>
+          <Typography variant="h3" gutterBottom align="center">
+            Invalid link
+          </Typography>
+          <Error code="INVALID_RESET_PASSWORD_LINK" />
+        </>
+      ) : (
+        <>
+          <Typography variant="h3" gutterBottom align="center">
+            Reset your password
+          </Typography>
+          <Typography>Set a new password for logging in.</Typography>
+          {error && <Error code={error} />}
+          <ResetPasswordForm loading={loading} onSubmit={submitHandler} />
+        </>
+      )}
     </>
   );
 };
