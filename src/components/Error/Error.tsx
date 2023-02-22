@@ -45,6 +45,22 @@ export const Error: FC<ErrorProps> = ({ code }) => {
       </Alert>
     );
   }
+  if (code === "INVALID_RESET_PASSWORD_LINK") {
+    return (
+      <Alert severity="error">
+        <Typography>This reset password link is not valid</Typography>
+      </Alert>
+    );
+  }
+  if (code === "TOO_MANY_TRIES") {
+    return (
+      <Alert severity="error">
+        <Typography>
+          You have exceeded the attempts limit. Try again in two hours
+        </Typography>
+      </Alert>
+    );
+  }
   return (
     <Alert severity="error">
       <Typography>Internal error</Typography>
