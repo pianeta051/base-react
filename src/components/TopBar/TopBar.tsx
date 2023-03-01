@@ -18,7 +18,6 @@ export const TopBar: FC = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
   const { logOut, user } = useAuth();
-  console.log(user);
 
   const openUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -41,7 +40,15 @@ export const TopBar: FC = () => {
     closeUserMenu();
     navigate("/");
   };
-
+  const getInitials = () => {
+    if (!user?.attributes) {
+      return "";
+    }
+    if (!user?.attributes?.name) {
+      return user?.attributes.email[0];
+    }
+    return user?.attributes.name[0];
+  };
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -52,7 +59,7 @@ export const TopBar: FC = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={openUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Fake User">FU</Avatar>
+                <Avatar alt="Fake User">{getInitials()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu

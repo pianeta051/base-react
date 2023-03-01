@@ -14,11 +14,7 @@ exports.handler = async (event) => {
     const code = event.request.codeParameter;
     const redirectTo = event.request.clientMetadata.redirectTo;
     event.response.emailSubject = "Reset your password";
-    event.response.emailMessage = forgotPasswordTemplate(
-      email,
-      code,
-      redirectTo
-    );
+    event.response.emailMessage = forgotPasswordTemplate(email, code);
   }
   return event;
 };

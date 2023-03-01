@@ -1,11 +1,11 @@
-import { CognitoUser } from "amazon-cognito-identity-js";
 import { createContext, useContext } from "react";
+import { CognitoUserWithAttributes } from "../services/authentication";
 
 type AuthContextData = {
-  user: CognitoUser | null;
-  setUser?: (user: CognitoUser) => void;
+  user: CognitoUserWithAttributes | null;
+  setUser?: (user: CognitoUserWithAttributes) => void;
   authStatus: "checking" | "authenticated" | "unauthenticated";
-  logIn?: (user: CognitoUser) => void;
+  logIn?: (user: CognitoUserWithAttributes) => void;
   logOut?: () => Promise<void>;
 };
 
