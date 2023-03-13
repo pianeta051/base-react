@@ -7,11 +7,13 @@ type AuthContextData = {
   authStatus: "checking" | "authenticated" | "unauthenticated";
   logIn?: (user: CognitoUserWithAttributes) => void;
   logOut?: () => Promise<void>;
+  isInGroup: (group: string) => boolean;
 };
 
 export const AuthContext = createContext<AuthContextData>({
   user: null,
   authStatus: "checking",
+  isInGroup: () => false,
 });
 
 export const useAuth = () => useContext(AuthContext);

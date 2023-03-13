@@ -14,13 +14,21 @@
     },
     "categories": {
       "auth": {
-        "exercises": {}
+        "exercises": {},
+        "userPoolGroups": {}
       },
       "function": {
         "exercisesCustomMessage": {
           "deploymentBucketName": "amplify-exercises-dev-160903-deployment",
-          "s3Key": "amplify-builds/exercisesCustomMessage-6c723039785253424f59-build.zip"
+          "s3Key": "amplify-builds/exercisesCustomMessage-766d6b6a52444e703269-build.zip"
+        },
+        "AdminQueries2f011aff": {
+          "deploymentBucketName": "amplify-exercises-dev-160903-deployment",
+          "s3Key": "amplify-builds/AdminQueries2f011aff-7075586745646e464b48-build.zip"
         }
+      },
+      "api": {
+        "AdminQueries": {}
       }
     }
   }
