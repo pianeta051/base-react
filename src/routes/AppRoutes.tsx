@@ -8,9 +8,11 @@ import { LogInPage } from "../pages/LogIn/LogIn";
 import { ProfilePage } from "../pages/Profile/Profile";
 import { ResetPasswordPage } from "../pages/ResetPassword/ResetPassword";
 import { SetPasswordPage } from "../pages/SetPassword/SetPassword";
+import { UserDetails } from "../pages/Users/UserDetails";
 import { UsersPage } from "../pages/Users/Users";
 import { AuthenticatedRoute } from "./AuthenticatedRoute";
 import { UnAuthenticatedRoute } from "./UnAuthenticateRoute";
+import { AdminRoute } from "./AdminRoute";
 
 export const AppRoutes: FC = () => (
   <Routes>
@@ -32,13 +34,16 @@ export const AppRoutes: FC = () => (
       path="users"
       element={
         <AuthenticatedRoute>
-          <UsersLayout />
+          <AdminRoute>
+            <UsersLayout />
+          </AdminRoute>
         </AuthenticatedRoute>
       }
     >
       <Route index element={<UsersPage />} />
       <Route path="create" element={<CreateUserPage />} />
       <Route path="me" element={<ProfilePage />} />
+      <Route path=":id" element={<UserDetails />} />
     </Route>
   </Routes>
 );
